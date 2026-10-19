@@ -547,7 +547,7 @@
 
   function calculate() {
     const size = parseInt(hhSizeEl.value, 10) || 1;
-    const income = Math.max(0, parseFloat(hhIncomeEl.value) || 0);
+    const income = Math.max(0, Math.max(0, parseFloat(hhIncomeEl.value) || 0));
     const age = Math.min(64, Math.max(18, parseInt(primaryAgeEl.value, 10) || 38));
     const loc = locationEl.value;
     const isFamily = coverageTypeEl.value === 'family';
