@@ -1,28 +1,577 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ACA Subsidy Calculator 2026 - Under maintenance</title>
-<meta name="robots" content="noindex, nofollow">
-<meta name="site-status" content="maintenance">
-<meta name="description" content="This tool is temporarily offline while it is rebuilt.">
+<title>ACA Health Insurance Subsidy Calc</title>
+<meta name="description" content="Calculate your ACA health insurance subsidy, FPL percent, and monthly credits.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://us-aca-health-insurance-subsidy.enjoy-onepage.com/">
+<meta name="theme-color" content="#0891b2">
+<link rel="icon" href="/favicon.ico">
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ACA Health Insurance Subsidy Calc">
+<meta property="og:title" content="ACA Health Insurance Subsidy Calc">
+<meta property="og:description" content="Calculate your ACA health insurance subsidy, FPL percent, and monthly credits.">
+<meta property="og:url" content="https://us-aca-health-insurance-subsidy.enjoy-onepage.com/">
+<meta property="og:image" content="https://us-aca-health-insurance-subsidy.enjoy-onepage.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ACA Health Insurance Subsidy Calc">
+<meta name="twitter:description" content="Calculate your ACA health insurance subsidy, FPL percent, and monthly credits.">
+<meta name="twitter:image" content="https://us-aca-health-insurance-subsidy.enjoy-onepage.com/og-image.png">
+<link rel="alternate" type="application/rss+xml" title="ACA Subsidy RSS" href="https://us-aca-health-insurance-subsidy.enjoy-onepage.com/rss.xml">
+<link rel="sitemap" type="application/xml" href="https://us-aca-health-insurance-subsidy.enjoy-onepage.com/sitemap.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://us-aca-health-insurance-subsidy.enjoy-onepage.com/#webapp",
+      "name": "ACA Health Insurance Subsidy Calc",
+      "url": "https://us-aca-health-insurance-subsidy.enjoy-onepage.com/",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "All",
+      "inLanguage": "en",
+      "description": "Interactive Affordable Care Act health insurance calculator estimating Premium Tax Credits (PTC) and Federal Poverty Level thresholds.",
+      "image": "https://us-aca-health-insurance-subsidy.enjoy-onepage.com/og-image.png",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://us-aca-health-insurance-subsidy.enjoy-onepage.com/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the Affordable Care Act (ACA) Premium Tax Credit?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The ACA Premium Tax Credit is a federal subsidy that lowers monthly health insurance premiums for eligible individuals and families purchasing coverage through HealthCare.gov or state exchanges."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What income qualifies for health insurance subsidies under the ACA?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Subsidies are available starting at 100% of the Federal Poverty Level. Under enhanced rules, premium contributions are capped at 8.5% of household income even for incomes above 400% FPL."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are Cost-Sharing Reductions (CSR) and how do they work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cost-Sharing Reductions are extra discounts that lower out-of-pocket healthcare costs such as deductibles, copayments, and coinsurance when you enroll in a Silver category plan with income up to 250% FPL."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6946654760086847" crossorigin="anonymous"></script>
 <style>
-  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: #f8fafc; color: #0f172a; }
-  main { max-width: 560px; margin: 12vh auto; padding: 32px 24px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; }
-  h1 { font-size: 1.4rem; margin: 0 0 12px; }
-  p { line-height: 1.6; color: #334155; }
-  a { color: #1d4ed8; font-weight: 600; }
-  .tag { display: inline-block; font-size: .8rem; font-weight: 700; color: #92400e; background: #fef3c7; border-radius: 999px; padding: 4px 10px; margin-bottom: 14px; }
+  :root {
+    --primary: #0891b2;
+    --primary-hover: #0e7490;
+    --border: #e2e8f0;
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-main);
+    line-height: 1.5;
+    padding: 0 16px;
+  }
+  .container { max-width: 1040px; margin: 0 auto; padding: 24px 0 48px; }
+  header { text-align: center; margin-bottom: 24px; }
+  header h1 { font-size: 1.85rem; font-weight: 800; color: #1e293b; margin-bottom: 6px; }
+  header p { font-size: 0.95rem; color: var(--text-muted); }
+
+  .manual-ad-box {
+    margin: 16px auto;
+    text-align: center;
+    background: transparent;
+  }
+
+  .grid2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+  @media (min-width: 768px) {
+    .grid2 { grid-template-columns: 1fr 1fr; }
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  }
+  .card h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .form-group { margin-bottom: 14px; }
+  .form-label { display: block; font-size: 0.82rem; font-weight: 600; color: #334155; margin-bottom: 4px; }
+  .form-input, .form-select {
+    width: 100%;
+    padding: 9px 12px;
+    font-size: 0.9rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    outline: none;
+    background: #ffffff;
+  }
+  .form-input:focus, .form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(8,145,178,0.12);
+  }
+
+  .summary-banner {
+    background: #ecfeff;
+    border: 2px solid #a5f3fc;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 18px;
+  }
+  .summary-title { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: #0e7490; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .summary-value { font-size: 2.1rem; font-weight: 800; color: #155e75; font-family: ui-monospace, SFMono-Regular, monospace; }
+  .summary-sub { font-size: 0.8rem; color: #0891b2; font-weight: 600; margin-top: 4px; }
+
+  .fpl-badge {
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
+  }
+
+  .breakdown-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+  }
+  .breakdown-table tr { border-bottom: 1px solid #f1f5f9; }
+  .breakdown-table tr:last-child { border-bottom: none; }
+  .breakdown-table td { padding: 8px 4px; }
+  .breakdown-table .k { color: var(--text-muted); font-weight: 500; }
+  .breakdown-table .v { text-align: right; font-weight: 700; color: #1e293b; }
+
+  .csr-box {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 0.78rem;
+    color: #475569;
+    line-height: 1.45;
+  }
+  .csr-box strong { color: #0e7490; }
+
+  .info-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .info-section h2 { font-size: 1.2rem; font-weight: 700; color: #1e293b; margin-bottom: 16px; }
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media (min-width: 640px) {
+    .info-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .how-step {
+    background: #f8fafc;
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .how-step .step-num {
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+    background: var(--primary);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 800;
+    border-radius: 50%;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .how-step h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; color: #1e293b; }
+  .how-step p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.45; }
+
+  .faq-list { margin-top: 14px; }
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+    padding: 12px 0;
+  }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-item h3 { font-size: 0.95rem; font-weight: 700; color: #1e293b; margin-bottom: 4px; }
+  .faq-item p { font-size: 0.85rem; color: #475569; line-height: 1.5; }
+
+  .toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0f172a;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: .85rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,.15);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s;
+    z-index: 9999;
+  }
+  .toast.show { opacity: 1; }
+
+  footer {
+    text-align: center;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+  }
+  footer a { color: var(--text-muted); text-decoration: none; margin: 0 8px; }
+  footer a:hover { color: var(--text-main); text-decoration: underline; }
 </style>
 </head>
 <body>
-<main>
-  <span class="tag">Under maintenance</span>
-  <h1>ACA Subsidy Calculator 2026</h1>
-  <p>This tool is temporarily offline. We found that the previous version did not work the way it was described, so we took it down while we rebuild it properly.</p>
-  <p>Please check back later.</p>
-  <p><a href="https://enjoy-onepage.com/">Browse our other free tools</a></p>
-</main>
+<div class="container">
+  <header>
+    <h1>ACA Health Insurance Subsidy Calc</h1>
+    <p>Estimate your Affordable Care Act Premium Tax Credit (PTC) and net monthly payment.</p>
+  </header>
+
+  <!-- ADSENSE START: top -->
+  <div class="manual-ad-box ad-top-banner" style="width: 100%; max-width: 960px; min-height: 100px; margin: 0 auto 16px; text-align: center; background: transparent;">
+    <ins class="adsbygoogle"
+         style="display:block; min-height: 100px;"
+         data-ad-client="ca-pub-6946654760086847"
+         data-ad-slot="3824727725"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  <!-- ADSENSE END: top -->
+
+  <div class="grid2">
+    <section class="card">
+      <h2>Household &amp; Coverage Info</h2>
+
+      <div class="form-group">
+        <label class="form-label" for="hhSize">Household Size (Tax Family)</label>
+        <select id="hhSize" class="form-select">
+          <option value="1">1 Person (Individual)</option>
+          <option value="2">2 People</option>
+          <option value="3" selected>3 People</option>
+          <option value="4">4 People</option>
+          <option value="5">5 People</option>
+          <option value="6">6 People</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="hhIncome">Annual Household Income (MAGI) ($)</label>
+        <input type="number" id="hhIncome" class="form-input" value="52000" min="0" step="1000">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="primaryAge">Primary Enrollee Age</label>
+        <input type="number" id="primaryAge" class="form-input" value="38" min="18" max="64">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="location">Location</label>
+        <select id="location" class="form-select">
+          <option value="contiguous" selected>48 Contiguous States &amp; DC</option>
+          <option value="alaska">Alaska</option>
+          <option value="hawaii">Hawaii</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="coverageType">Coverage Tier</label>
+        <select id="coverageType" class="form-select">
+          <option value="self">Individual Only</option>
+          <option value="family" selected>Family Coverage</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Estimated Subsidy &amp; Premium</h2>
+
+      <div class="summary-banner">
+        <div class="summary-title">Estimated Monthly Subsidy (Tax Credit)</div>
+        <div class="summary-value" id="valMonthlySubsidy">$865 / mo</div>
+        <div class="summary-sub" id="valAnnualSavings">Annual Subsidy Savings: $10,380</div>
+      </div>
+
+      <div class="fpl-badge" id="fplBadge">
+        <span>Federal Poverty Level (FPL):</span>
+        <span id="valFplPercent">201% FPL</span>
+      </div>
+
+      <table class="breakdown-table">
+        <tbody>
+          <tr>
+            <td class="k">Benchmark Silver Plan Premium:</td>
+            <td class="v" id="valBenchmark">$1,040 / mo</td>
+          </tr>
+          <tr>
+            <td class="k">Your Expected Monthly Contribution:</td>
+            <td class="v" id="valExpectedCont">$175 / mo</td>
+          </tr>
+          <tr>
+            <td class="k">Net Out-of-Pocket Payment:</td>
+            <td class="v" id="valNetPayment" style="color: #0891b2;">$175 / mo</td>
+          </tr>
+          <tr>
+            <td class="k">Required Income Contribution Rate:</td>
+            <td class="v" id="valContRate">4.04% of Income</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="csr-box" id="csrBox">
+        <strong>Cost-Sharing Reductions (CSR):</strong> Eligible for Silver 73 CSR plan with reduced deductibles and copays.
+      </div>
+    </section>
+  </div>
+  <!-- ADSENSE START: mid -->
+  <div class="manual-ad-box ad-mid-banner" style="width: 100%; max-width: 960px; min-height: 250px; margin: 20px auto; text-align: center; background: transparent;">
+    <ins class="adsbygoogle"
+         style="display:block; min-height: 250px;"
+         data-ad-client="ca-pub-6946654760086847"
+         data-ad-slot="1186914926"
+         data-ad-format="rectangle,horizontal"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  <!-- ADSENSE END: mid -->
+
+  <section class="info-section">
+    <h2>How the ACA Subsidy Works</h2>
+    <div class="info-grid">
+      <div class="how-step">
+        <span class="step-num">1</span>
+        <h3>Determine FPL Tier</h3>
+        <p>Your income is compared to the Federal Poverty Guidelines to find your exact FPL percentage.</p>
+      </div>
+      <div class="how-step">
+        <span class="step-num">2</span>
+        <h3>Cap Contribution</h3>
+        <p>Federal law caps your health insurance cost to between 0% and 8.5% of your household income.</p>
+      </div>
+      <div class="how-step">
+        <span class="step-num">3</span>
+        <h3>Apply Tax Credit</h3>
+        <p>The difference between the benchmark plan cost and your capped contribution is paid as a subsidy.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="info-section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-list">
+      <div class="faq-item"><h3>What is the Affordable Care Act (ACA) Premium Tax Credit?</h3><p>The ACA Premium Tax Credit is a federal subsidy that lowers monthly health insurance premiums for eligible individuals and families purchasing coverage through HealthCare.gov or state exchanges.</p></div>
+      <div class="faq-item"><h3>What income qualifies for health insurance subsidies under the ACA?</h3><p>Subsidies are available starting at 100% of the Federal Poverty Level. Under enhanced rules, premium contributions are capped at 8.5% of household income even for incomes above 400% FPL.</p></div>
+      <div class="faq-item"><h3>What are Cost-Sharing Reductions (CSR) and how do they work?</h3><p>Cost-Sharing Reductions are extra discounts that lower out-of-pocket healthcare costs such as deductibles, copayments, and coinsurance when you enroll in a Silver category plan with income up to 250% FPL.</p></div>
+    </div>
+  </section>
+
+  <!-- ADSENSE START: bottom -->
+  <div class="manual-ad-box ad-bottom-banner" style="width: 100%; max-width: 960px; min-height: 280px; margin: 24px auto 16px; text-align: center; background: transparent;">
+    <ins class="adsbygoogle"
+         style="display:block; min-height: 280px;"
+         data-ad-client="ca-pub-6946654760086847"
+         data-ad-slot="3416334507"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  <!-- ADSENSE END: bottom -->
+
+  <div id="global-ux-toast" class="toast" role="status" aria-live="polite"></div>
+
+  <footer>
+    <p>&copy; 2026 ACA Health Insurance Subsidy Calculator. All rights reserved.</p>
+    <p style="margin-top: 8px;">
+      <a href="/privacy.html">Privacy Policy</a> &bull;
+      <a href="/terms.html">Terms of Service</a> &bull;
+      <a href="/disclaimer.html">Disclaimer</a>
+    </p>
+  </footer>
+</div>
+
+<!-- LOGIC START -->
+<script>
+(function() {
+  const hhSizeEl = document.getElementById('hhSize');
+  const hhIncomeEl = document.getElementById('hhIncome');
+  const primaryAgeEl = document.getElementById('primaryAge');
+  const locationEl = document.getElementById('location');
+  const coverageTypeEl = document.getElementById('coverageType');
+
+  const valMonthlySubsidyEl = document.getElementById('valMonthlySubsidy');
+  const valAnnualSavingsEl = document.getElementById('valAnnualSavings');
+  const valFplPercentEl = document.getElementById('valFplPercent');
+  const valBenchmarkEl = document.getElementById('valBenchmark');
+  const valExpectedContEl = document.getElementById('valExpectedCont');
+  const valNetPaymentEl = document.getElementById('valNetPayment');
+  const valContRateEl = document.getElementById('valContRate');
+  const csrBoxEl = document.getElementById('csrBox');
+
+  function fmt(n) {
+    return '$' + Math.round(n).toLocaleString('en-US');
+  }
+
+  function getFpl(size, loc) {
+    let base = 15060;
+    let extra = 5380;
+    if (loc === 'alaska') {
+      base = 18810;
+      extra = 6730;
+    } else if (loc === 'hawaii') {
+      base = 17310;
+      extra = 6190;
+    }
+    return base + (size - 1) * extra;
+  }
+
+  function getApplicablePercent(fplRatio) {
+    // Enhanced ACA sliding scale (Inflation Reduction Act standard)
+    if (fplRatio <= 1.50) {
+      return 0.0;
+    } else if (fplRatio <= 2.00) {
+      // 0.0% to 2.0%
+      return ((fplRatio - 1.50) / 0.50) * 2.0;
+    } else if (fplRatio <= 2.50) {
+      // 2.0% to 4.0%
+      return 2.0 + ((fplRatio - 2.00) / 0.50) * 2.0;
+    } else if (fplRatio <= 3.00) {
+      // 4.0% to 6.0%
+      return 4.0 + ((fplRatio - 2.50) / 0.50) * 2.0;
+    } else if (fplRatio <= 4.00) {
+      // 6.0% to 8.5%
+      return 6.0 + ((fplRatio - 3.00) / 1.00) * 2.5;
+    } else {
+      // Above 400% FPL capped at 8.5%
+      return 8.5;
+    }
+  }
+
+  function getBenchmarkPremium(age, isFamily, size) {
+    // Benchmark 2nd lowest Silver plan curve based on age (standard CMS base ~ $450 at age 40)
+    const ageFactor = Math.pow(age / 40, 1.3);
+    const adultCost = 450 * ageFactor;
+    if (!isFamily || size === 1) {
+      return Math.round(adultCost);
+    }
+    // Family: approx 2 adults + children (child cost ~ 0.55 adult)
+    const childrenCount = Math.max(0, size - 2);
+    const secondAdult = adultCost * 0.95;
+    const childrenCost = childrenCount * (adultCost * 0.55);
+    return Math.round(adultCost + secondAdult + childrenCost);
+  }
+
+  function calculate() {
+    const size = parseInt(hhSizeEl.value, 10) || 1;
+    const income = Math.max(0, parseFloat(hhIncomeEl.value) || 0);
+    const age = Math.min(64, Math.max(18, parseInt(primaryAgeEl.value, 10) || 38));
+    const loc = locationEl.value;
+    const isFamily = coverageTypeEl.value === 'family';
+
+    const fplBaseline = getFpl(size, loc);
+    const fplRatio = fplBaseline > 0 ? (income / fplBaseline) : 1;
+    const fplPercent = Math.round(fplRatio * 100);
+
+    valFplPercentEl.textContent = fplPercent + '% FPL ($' + fplBaseline.toLocaleString() + ' base)';
+
+    const applicablePercent = getApplicablePercent(fplRatio);
+    valContRateEl.textContent = applicablePercent.toFixed(2) + '% of Income';
+
+    const expectedAnnual = income * (applicablePercent / 100);
+    const expectedMonthly = expectedAnnual / 12;
+
+    const benchmarkMonthly = getBenchmarkPremium(age, isFamily, size);
+    valBenchmarkEl.textContent = fmt(benchmarkMonthly) + ' / mo';
+
+    let monthlySubsidy = 0;
+    if (fplPercent < 100) {
+      // Under 100% FPL note
+      monthlySubsidy = 0;
+      valMonthlySubsidyEl.textContent = '$0 / mo';
+      valAnnualSavingsEl.textContent = 'May qualify for Medicaid (income < 100% FPL)';
+      valExpectedContEl.textContent = '$0 / mo';
+      valNetPaymentEl.textContent = fmt(benchmarkMonthly) + ' / mo';
+      csrBoxEl.innerHTML = '<strong>Medicaid Eligibility:</strong> In most states, individuals under 138% FPL qualify for free or very low cost Medicaid coverage.';
+      return;
+    }
+
+    monthlySubsidy = Math.max(0, benchmarkMonthly - expectedMonthly);
+    const netPayment = Math.max(0, benchmarkMonthly - monthlySubsidy);
+
+    valMonthlySubsidyEl.textContent = fmt(monthlySubsidy) + ' / mo';
+    valAnnualSavingsEl.textContent = 'Annual Subsidy Savings: ' + fmt(monthlySubsidy * 12);
+    valExpectedContEl.textContent = fmt(expectedMonthly) + ' / mo';
+    valNetPaymentEl.textContent = fmt(netPayment) + ' / mo';
+
+    // CSR logic
+    if (fplPercent <= 150) {
+      csrBoxEl.innerHTML = '<strong>Cost-Sharing Reductions (CSR):</strong> Eligible for Silver 94 CSR plan with lowest copays and deductibles (Actuarial Value 94%).';
+    } else if (fplPercent <= 200) {
+      csrBoxEl.innerHTML = '<strong>Cost-Sharing Reductions (CSR):</strong> Eligible for Silver 87 CSR plan with significantly lower deductibles and copays.';
+    } else if (fplPercent <= 250) {
+      csrBoxEl.innerHTML = '<strong>Cost-Sharing Reductions (CSR):</strong> Eligible for Silver 73 CSR plan with moderate deductible discounts.';
+    } else {
+      csrBoxEl.innerHTML = '<strong>Standard Coverage:</strong> Above 250% FPL, standard Silver 70 plan deductibles apply, but premium tax credit still lowers monthly costs.';
+    }
+  }
+
+  [hhSizeEl, hhIncomeEl, primaryAgeEl, locationEl, coverageTypeEl].forEach(el => {
+    el.addEventListener('input', calculate);
+    el.addEventListener('change', calculate);
+  });
+
+  calculate();
+})();
+</script>
+<!-- LOGIC END -->
 </body>
 </html>
